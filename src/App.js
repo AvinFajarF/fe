@@ -3,6 +3,9 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Login from "./components/auth/Login";
 import Navbar from "./components/Navbar";
 import Masyarakat from "./components/dashboard/masyarakat/Masyarakat";
+import Consultasion from "./components/dashboard/masyarakat/Consultasion";
+import Vaksinasi from "./components/dashboard/masyarakat/Vaksinasi";
+import Doctor from "./components/dashboard/doctor/Doctor";
 
 function App() {
   return (
@@ -11,7 +14,13 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/login" element={<Login />} />
-        <Route path="/masyarakat" element={<Masyarakat />} />
+          <Route path="/masyarakat" element={<Masyarakat />} />
+          <Route path="/masyarakat/consultasion" element={<Consultasion />} />
+          <Route path="/masyarakat/vaksinasi" element={<Vaksinasi />} />
+
+
+          {/* doctor route */}
+          <Route path="/doctor" element={<Doctor />} />
         </Routes>
       </BrowserRouter>
     </>

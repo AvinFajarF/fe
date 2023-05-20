@@ -1,38 +1,40 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
   const [username, setUsername] = useState();
   const [password, setPassword] = useState("");
 
-  // const url = "http://localhost:8080/api/v1/";
+  const navigate = useNavigate();
+  const parsedUsername = parseInt(username);
 
-  useEffect(() => {
-    axios.get("http://127.0.0.1:8000/api/v1/konsultasi",{
-    withCredentials: true,
-    
-    }).then((response) => {
-
-console.log(response.json());
-    }).catch(err => console.log(err))
-
-
-
-  })
+  
 
   const handleLogin = async () => {
     await axios
-      .post(`http://127.0.0.1:8080/api/v1/auth/login`, {
-        username: username,
-        password: password,
-      },{
-        withCredentials: true
-      })
+      .post(
+        `http://127.0.0.1:8000/api/v1/auth/login`,
+        {
+          id_card_number: parsedUsername,
+          password: password,
+        },
+        {
+          withCredentials: true,
+        }
+      )
       .then((e) => {
-        console.log(e);
+        if (e.data.role === 'doctor' && e.status === 200) {
+            navigate('/doctor');
+          localStorage.setItem("token", e.data.token);
+        }else{
+          localStorage.setItem("token", e.data.token);
+         navigate('/masyarakat');
+        }
       })
       .catch((e) => console.log(e));
   };
+
 
   return (
     <>
