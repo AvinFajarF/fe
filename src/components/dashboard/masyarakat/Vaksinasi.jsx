@@ -1,7 +1,11 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Vaksinasi() {
+  const navigate = useNavigate();
+
+
   const [doctor, setDoctor] = useState([]);
 
   const [doctorId, setDoctorId] = useState();
@@ -47,6 +51,11 @@ function Vaksinasi() {
   };
 
   useEffect(() => {
+
+    if (!token) {
+      navigate("/login"); 
+    }
+
     getProfile();
     getAllDoctor();
     getAllSpots();

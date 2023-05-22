@@ -9,8 +9,6 @@ function Login() {
   const navigate = useNavigate();
   const parsedUsername = parseInt(username);
 
-  
-
   const handleLogin = async () => {
     await axios
       .post(
@@ -24,17 +22,17 @@ function Login() {
         }
       )
       .then((e) => {
-        if (e.data.role === 'doctor' && e.status === 200) {
-            navigate('/doctor');
-          localStorage.setItem("token", e.data.token);
-        }else{
-          localStorage.setItem("token", e.data.token);
-         navigate('/masyarakat');
+        console.log(e.data.boddy.token);
+        if (e.data.role === "doctor" && e.status === 200) {
+          navigate("/doctor");
+          localStorage.setItem("token", e.data.boddy.token);
+        } else {
+          localStorage.setItem("token", e.data.boddy.token);
+          navigate("/masyarakat");
         }
       })
       .catch((e) => console.log(e));
   };
-
 
   return (
     <>

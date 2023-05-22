@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function TempatVaksinasi() {
   const [spotVaksinasion, setSpotVaksinasion] = useState([]);
@@ -8,6 +9,8 @@ function TempatVaksinasi() {
   const [doctor, setDoctor] = useState([]);
 
   const token = localStorage.getItem("token");
+
+  const navigate = useNavigate();
 
   const getAllDoctor = async () => {
     await axios.get("http://localhost:8000/api/v1/doctor").then((res) => {
@@ -25,7 +28,11 @@ function TempatVaksinasi() {
     await axios
       .get("http://localhost:8000/api/v1/profile", { params: { token: token } })
       .then((res) => {
-        setIdRegional(res.data.spot.id);
+        if (res.data.data.id) {
+          setIdRegional(res.data.data.id);
+        }else{
+          setIdRegional(res.data.spot.id);
+        }
       });
   };
 
@@ -40,6 +47,10 @@ function TempatVaksinasi() {
   };
 
   useEffect(() => {
+    if (!token) {
+        navigate("/login");
+    }
+
     getProfile();
     getAllDoctor();
     getAllSpots();

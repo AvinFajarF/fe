@@ -7,7 +7,6 @@ function Doctor() {
   const [data, setData] = useState([]);
   const [status, setStatus] = useState([]);
 
-  console.log(status);
 
   const getConsultasion = async () => {
     await axios

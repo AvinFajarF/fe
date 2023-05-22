@@ -1,9 +1,12 @@
 import axios from 'axios'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 
 function Consultasion() {
     // get token in local storage
-    const token = localStorage.getItem('token')
+    const token = localStorage.getItem("token");
+
+    const navigate = useNavigate();
 
     console.log(token);
     // use state
@@ -22,8 +25,14 @@ function Consultasion() {
         }).catch((e) => {
             console.log(e);
         })
-
     }
+
+
+    useEffect(() => {
+      if (!token) {
+        navigate("/login");
+      }
+    },[])
 
   return (
     <>

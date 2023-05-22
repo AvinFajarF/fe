@@ -1,18 +1,31 @@
 import React, { useEffect, useState } from "react";
 import "./style.css";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function Masyarakat() {
 
   const [consultasion, setConsultasion] = useState([])
   const token = localStorage.getItem("token");
 
+  const navigate = useNavigate();
+
   const getConsultasion = async () => {
-    await axios.get("http://localhost:8000/api/v1/consultation/single", {params: {token: token}}).then(e => setConsultasion(e.data.konsultasi))
+    if (!token) {
+      navigate("/login");
+    }
+
+    if (token) { 
+      await axios.get("http://localhost:8000/api/v1/consultation/single", {params: {token: token}}).then(e => setConsultasion(e.data.konsultasi))
+    }
   }
 
-
   useEffect(() => {
+
+    if (!token) {
+      navigate("/login");
+    }
+
     getConsultasion()
   },[])
 
