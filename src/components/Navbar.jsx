@@ -1,7 +1,22 @@
+import axios from "axios";
 import React from "react";
 
 function Navbar() {
   const token = localStorage.getItem("token");
+
+  const handleLogOut = () => {
+    axios
+      .post("http://localhost:8000/api/v1/auth/logout", {
+        token: token,
+      })
+      .then((res) => {
+        if (res.status === 200) {
+          localStorage.removeItem("token");
+          console.log(res);
+        }
+      });
+  };
+
   return (
     <>
       <nav class="navbar navbar-expand-lg bg-light">
@@ -23,16 +38,32 @@ function Navbar() {
           <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
               <li class="nav-item">
-                <a class="nav-link" aria-current="page" href="#">
+                <a class="nav-link" aria-current="page" href="/masyarakat">
                   Meminta Konsultasi
                 </a>
               </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  aria-current="page"
+                  href="/masyarakat/tempat/vaksinasi"
+                >
+                  Tempat Vaksinasi
+                </a>
+              </li>
               {token ? (
-                <li class="nav-item">
-                  <a class="nav-link" href="#">
-                    Log out
-                  </a>
-                </li>
+                <form
+                  action=""
+                  method="post"
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    handleLogOut();
+                  }}
+                >
+                  <li class="nav-item">
+                    <button className="btn btn-sm btn-primary">LogOut</button>
+                  </li>
+                </form>
               ) : (
                 <li class="nav-item">
                   <a class="nav-link" href="/login">
