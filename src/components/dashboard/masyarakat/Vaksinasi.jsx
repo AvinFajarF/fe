@@ -55,7 +55,6 @@ function Vaksinasi() {
     if (!token) {
       navigate("/login"); 
     }
-
     getProfile();
     getAllDoctor();
     getAllSpots();

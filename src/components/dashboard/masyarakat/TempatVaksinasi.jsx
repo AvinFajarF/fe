@@ -80,6 +80,7 @@ function TempatVaksinasi() {
                       <p>
                         Kapasitas: {spot.kapasitas} dan melayani {spot.melayani}
                       </p>
+                      <a href={`/masyarakat/tempat/vaksinasi/${spot.id}`} className="btn btn-primary">Detail</a>
                     </div>
                   </div>
                 </div>
