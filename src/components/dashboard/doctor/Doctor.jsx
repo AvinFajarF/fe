@@ -1,8 +1,10 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Doctor() {
   const token = localStorage.getItem("token");
+  const navigate = useNavigate()
 
   const [data, setData] = useState([]);
   const [status, setStatus] = useState([]);
@@ -20,6 +22,10 @@ function Doctor() {
 
   useEffect(() => {
     getConsultasion();
+
+    // if (token === undefined || token === null || !token) {
+    //   navigate("/login")
+    // }
   }, []);
 
   const handleStatus = async (id) => {

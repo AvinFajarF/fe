@@ -1,5 +1,5 @@
-import React from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import React, { useEffect } from "react";
+import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
 import Login from "./components/auth/Login";
 import Navbar from "./components/Navbar";
 import Masyarakat from "./components/dashboard/masyarakat/Masyarakat";
@@ -10,6 +10,8 @@ import TempatVaksinasi from "./components/dashboard/masyarakat/TempatVaksinasi";
 import DetailTempat from "./components/dashboard/masyarakat/DetailTempat";
 
 function App() {
+
+
   return (
     <>
     <Navbar />

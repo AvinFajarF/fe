@@ -35,8 +35,7 @@ function Vaksinasi() {
     await axios
       .get("http://localhost:8000/api/v1/profile", { params: { token: token } })
       .then((res) => {
-        console.log(res.data.data);
-        setIdRegional(res.data.spot.id);
+        setIdRegional(res.data.data.id);
       });
   };
 

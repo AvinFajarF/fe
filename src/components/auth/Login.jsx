@@ -5,9 +5,16 @@ import { useNavigate } from "react-router-dom";
 function Login() {
   const [username, setUsername] = useState();
   const [password, setPassword] = useState("");
+  const [response, setResponse] = useState();
+  const [isLoading, setIsLoading] = useState(false)
+  const [errorResponse, seterrorResponse] = useState();
 
   const navigate = useNavigate();
   const parsedUsername = parseInt(username);
+
+  const handleClick = () => {
+    setIsLoading(true);
+  }
 
   const handleLogin = async () => {
     await axios
@@ -22,20 +29,52 @@ function Login() {
         }
       )
       .then((e) => {
-        console.log(e.data.boddy.token);
-        if (e.data.role === "doctor" && e.status === 200) {
-          navigate("/doctor");
-          localStorage.setItem("token", e.data.boddy.token);
-        } else {
-          localStorage.setItem("token", e.data.boddy.token);
-          navigate("/masyarakat");
-        }
+
+        setResponse(e.status);
+
+        console.log(e.data.boddy.role);
+        if (e.data ) {
+          if (e.data.boddy.role === "doctor" && e.status === 200) {
+            localStorage.setItem("token", e.data.token);
+            navigate("/doctor");
+            } else {
+              localStorage.setItem("token", e.data.boddy.token);
+              navigate("/masyarakat");
+            };
+            }
       })
-      .catch((e) => console.log(e));
+      .catch((e) => seterrorResponse(e.response.data.message));
   };
 
   return (
     <>
+      {response === 200 ? (
+        <div
+          class="alert alert-success alert-dismissible fade show"
+          role="alert"
+        >
+          <strong>Anda berhasil login</strong> bla bla bla.
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="alert"
+            aria-label="Close"
+          ></button>
+        </div>
+      ) : (
+        ""
+      )}
+
+{errorResponse ?  (
+  <div className="alert alert-danger alert-dismissible fade show" role="alert">
+    <strong>Anda gagal login</strong> bla bla bla.
+    <button type="button" className="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+) : (
+  ""
+)}
+
+
       <div class="card mx-auto mt-5" style={{ width: "18rem" }}>
         <div class="card-body">
           <form
@@ -69,7 +108,7 @@ function Login() {
                 id="exampleInputPassword1"
               />
             </div>
-            <button type="submit" class="btn btn-primary">
+            <button type="submit" class={`btn btn-primary ${isLoading ? 'disabled' : ""}`} onClick={handleClick}>
               Submit
             </button>
           </form>
